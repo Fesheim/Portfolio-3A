@@ -1,0 +1,85 @@
+package com.example.quiz;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
+public class MainActivity extends AppCompatActivity {
+     int contR = 0;
+     int contP = 1;
+    String pergunta1 = "Qual o nome do meu gato?";
+    String resposta1 = "Luna";
+    String pergunta2 = "Qual cor é a cor do verde?";
+    String resposta2 = "Verde";
+    String pergunta3 = "Seu nome é joão?";
+    String resposta3 = "Não";
+    TextView pergunta = (TextView) findViewById(R.id.pergunta);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        atualizapergunta();
+    }
+    public void botao(View view){
+        if (contP == 1){
+            perguntar(resposta1);
+        }
+        else if (contP == 2){
+            perguntar(resposta2);
+        }
+        else if (contP == 3){
+            perguntar(resposta3);
+            atualizapergunta();
+        }
+
+    }
+    public void atualizapergunta() {
+        pergunta = (TextView) findViewById(R.id.pergunta);
+        if (contP == 1) {
+            pergunta.setText(pergunta1);
+            perguntar(resposta1);
+        }
+        else if (contP == 2){
+            pergunta.setText(pergunta2);
+            perguntar(resposta2);
+        }
+        else if (contP == 3){
+            pergunta.setText(pergunta3);
+            perguntar(resposta3);
+        }
+        else{
+            exibeFinal();
+        }
+    }
+
+
+    public void perguntar(String respostacerta){
+        EditText r = (EditText) findViewById(R.id.Resposta);
+       String respostaUsuario = r.getText().toString();
+        if(respostacerta.equals(respostaUsuario)){
+            Toast.makeText(MainActivity.this,"você acertou", Toast.LENGTH_LONG).show();
+          //  JOptionPane.showMessageDialog(null, "Acertou!");
+            contP ++;
+        }
+        else{
+            Toast.makeText(MainActivity.this,"você errou", Toast.LENGTH_LONG).show();
+         //   JOptionPane.showMessageDialog(null, "Errou!");
+            contP ++;
+            r.setText(null);
+            atualizapergunta();
+        }
+    }
+
+    public void exibeFinal(){
+        Toast.makeText(MainActivity.this,"você acertou" +contR+ " Questões", Toast.LENGTH_LONG).show();
+      //  JOptionPane.showMessageDialog(null, "Você acertou" + cont + " questões");
+        contP = 1;
+        contR = 0;
+    }
+}
